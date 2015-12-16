@@ -5,6 +5,7 @@ var apiList = require('../api');
 var TodoPage = require('./todo');
 var DonePage = require('./done');
 var DetailPage = require('./detail');
+var NewTodoPage = require('./newTodo');
 
 
 const DRAWER_REF = 'drawer';
@@ -12,6 +13,7 @@ const NAV_NAME = {
   todo: "TODO",
   done: "DONE",
   detail: "Detail",
+  newTodo: "New Todo",
   setting: "Setting"};
 
 var {
@@ -52,6 +54,9 @@ var NavBar = React.createClass({
           break;
         case NAV_NAME.detail:
           Component = DetailPage;
+          break;
+        case NAV_NAME.newTodo:
+          Component = NewTodoPage;
           break;
       }
 

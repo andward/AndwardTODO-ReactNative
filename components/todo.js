@@ -12,6 +12,7 @@ var {
   StyleSheet,
   Text,
   View,
+  TouchableNativeFeedback,
 } = React;
 
 var TodoPage = React.createClass({
@@ -58,7 +59,13 @@ var TodoPage = React.createClass({
     });
   },
 
-  renderTODO: function(todo) {
+  redirectToNewTodo: function() {
+    this.props.navigator.push({
+      name: 'New Todo',
+    });
+  },
+
+  renderTodo: function(todo) {
     return (
       <TodoItem 
       onSelect={() => this.selectTodo(todo)}
@@ -75,9 +82,9 @@ var TodoPage = React.createClass({
       <View style={styles.container}>
       <ListView
         dataSource = {this.state.dataSource}
-        renderRow = {this.renderTODO}
+        renderRow = {this.renderTodo}
         style = {styles.listView} />
-      <AddButton />
+      <AddButton onClick={() => this.redirectToNewTodo()}/>
       </View>
     );
   },

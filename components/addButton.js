@@ -7,14 +7,18 @@ var {
   StyleSheet,
   Text,
   View,
+  TouchableNativeFeedback,
 } = React;
 
 var AddButton = React.createClass({
 	render: function() {
 		return (
+			<TouchableNativeFeedback
+			onPress={() => this.props.onClick()}>
 			<View style = {styles.add}>
             <Text style = {styles.addText}>+</Text>
             </View>
+            </TouchableNativeFeedback>
 			);
 	},
 });
