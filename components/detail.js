@@ -27,7 +27,11 @@ var DetailPage = React.createClass({
 	},
 
 	fetchData: function() {
-		fetch(apiList.apiWrapper('comments', String(this.props.todo.id)))
+		fetch(apiList.apiWrapper('comments', String(this.props.todo.id)), {
+				headers: {
+					'Authorization': this.props.token,
+				},
+			})
 			.then((response) => response.json())
 			.then((responseData) => {
 				this.setState({

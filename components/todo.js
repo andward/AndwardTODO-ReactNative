@@ -8,6 +8,7 @@ var AddButton = require('./addButton');
 
 var {
   AppRegistry,
+  AsyncStorage,
   ListView,
   StyleSheet,
   Text,
@@ -25,20 +26,30 @@ var TodoPage = React.createClass({
     };
   },
 
-  componentDidMount: function() {
-    this.fetchData();
+  componentDidMount: async function() {
+    await this.props.getToken();
+    await this.fetchData();
   },
 
   fetchData: function() {
-    fetch(apiList.TODO_API)
-      .then((response) => response.json())
+    fetch(apiList.TODO_API, {
+        headers: {
+          'Authorization': this.props.token,
+        }
+      })
+      .then((response) => {
+        if (response.status >= 200 && response.status < 300) {
+          return response.json();
+        } else {
+          this.props.authFail();
+        }
+      })
       .then((responseData) => {
         this.setState({
           dataSource: this.state.dataSource.cloneWithRows(responseData),
           loaded: true,
         });
-      })
-      .done();
+      });
   },
 
   renderLoadingView: function() {

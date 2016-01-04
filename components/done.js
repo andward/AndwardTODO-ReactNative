@@ -28,7 +28,11 @@ var DonePage = React.createClass({
   },
 
   fetchData: function() {
-    fetch(apiList.DONE_API)
+    fetch(apiList.DONE_API, {
+        headers: {
+          'Authorization': this.props.token,
+        },
+      })
       .then((response) => response.json())
       .then((responseData) => {
         this.setState({

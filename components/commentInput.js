@@ -25,7 +25,8 @@ var CommentInput = React.createClass({
 				method: 'post',
 				headers: {
 					'Accept': 'application/json',
-					'Content-Type': 'application/json'
+					'Content-Type': 'application/json',
+					'Authorization': this.props.token,
 				},
 				body: JSON.stringify({
 					mark: this.props.todo.id,

@@ -27,7 +27,11 @@ var NewTodoPage = React.createClass({
 	},
 
 	fetchTags: function() {
-		fetch(apiList.TAGS_API)
+		fetch(apiList.TAGS_API, {
+			headers: {
+				'Authorization': this.props.token,
+			},
+		})
 		.then((response) => response.json())
 		.then((responseData) => {
 			this.setState({
@@ -37,8 +41,8 @@ var NewTodoPage = React.createClass({
         .done();
 	},
 
-	componentDidMount: function() {
-		this.fetchTags();
+	componentDidMount: async function() {
+		await this.fetchTags();
 	},
 
 	submitNewTodo: function() {
@@ -46,7 +50,8 @@ var NewTodoPage = React.createClass({
 			method: 'post',
 			headers: {
 				'Accept': 'application/json',
-				'Content-Type': 'application/json'
+				'Content-Type': 'application/json',
+				'Authorization': this.props.token,
 			},
 			body: JSON.stringify({
 				task: this.state.todoText,
@@ -97,7 +102,7 @@ var NewTodoPage = React.createClass({
 		    onChangeText = {(todoText) => this.setState({todoText})}
 		    value = {this.state.todoText}
 		    multiline = {true}
-		    placeholder = {'Add Todo...'} />
+		    placeholder = {'Your New Todo'} />
 		    </View>
 			<View style = {styles.input}>
 			<TextInput 
@@ -105,7 +110,7 @@ var NewTodoPage = React.createClass({
 		    onChangeText = {(tagText) => this.setState({tagText})}
 		    value = {this.state.tagText}
 		    multiline = {true}
-		    placeholder = {'Add Tag...'} />
+		    placeholder = {'Add New Tag -OR- Pick From Following'} />
 		    </View>
 		    <ScrollView style = {styles.scroll}>
             <ListView
@@ -135,7 +140,7 @@ var styles = StyleSheet.create({
     	paddingRight: 15,
     },
     scroll: {
-    	height: 150,
+    	height: 200,
     },
     selector: {
     	flex: 1,

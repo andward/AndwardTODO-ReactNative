@@ -6,6 +6,7 @@ var TodoPage = require('./todo');
 var DonePage = require('./done');
 var DetailPage = require('./detail');
 var NewTodoPage = require('./newTodo');
+var SignInPage = require('./sign');
 
 
 const DRAWER_REF = 'drawer';
@@ -14,19 +15,21 @@ const NAV_NAME = {
   done: "DONE",
   detail: "Detail",
   newTodo: "New Todo",
+  signIn: "Sign In",
   setting: "Setting"};
 
-var {
-　　AppRegistry,
-　　View,
-    ListView,
-　　Navigator,
-　　Text,
-　　BackAndroid,
-　　StyleSheet,
-    DrawerLayoutAndroid,
-    ToolbarAndroid,
-    Dimensions,
+var {　　
+  AppRegistry,
+  AsyncStorage,
+  View,
+  ListView,
+  Navigator,
+  Text,
+  BackAndroid,
+  StyleSheet,
+  DrawerLayoutAndroid,
+  ToolbarAndroid,
+  Dimensions,
 } = React;
 
 var NavBar = React.createClass({
@@ -34,11 +37,33 @@ var NavBar = React.createClass({
     getInitialState: function() {
       return ({
       title: null,
+      token: '',
       });
     },
 
     configureScene: function(route){
       return Navigator.SceneConfigs.FadeAndroid;
+    },
+
+    getToken: async function() {
+      var new_token = await AsyncStorage.getItem('token');
+      this.setState({token: new_token});
+    },
+
+    updateToken: async function(value) {
+      await AsyncStorage.setItem('token', 'Token ' + value);
+    },
+
+    removeToken: async function() {
+      await AsyncStorage.removeItem('token');
+    },
+
+    authFail: async function() {
+      await this.removeToken();
+      await this._navigator.push({
+        name: NAV_NAME.signIn,
+      });
+      this.refs[DRAWER_REF].closeDrawer();
     },
 
     renderScene: function(router, navigator){
@@ -58,11 +83,18 @@ var NavBar = React.createClass({
         case NAV_NAME.newTodo:
           Component = NewTodoPage;
           break;
+        case NAV_NAME.signIn:
+          Component = SignInPage;
+          break;
       }
 
       return <Component 
       navigator={navigator} 
-      todo={router.todo}/>
+      todo={router.todo}
+      token={this.state.token}
+      getToken={this.getToken}
+      updateToken={this.updateToken}
+      authFail={this.authFail}/>
     },
 
     componentDidMount: function() {
@@ -104,7 +136,13 @@ var NavBar = React.createClass({
             >DONE</Text>
           </View>
           <View style = {styles.item}>
-          <Text style = {styles.text}>SETTINGS</Text></View>
+          <Text style = {styles.text}>SETTINGS</Text>
+          </View>
+          <View style = {styles.item}>
+          <Text style = {styles.text}
+          onPress= {() => {this.authFail();}}
+          >Log Out</Text>
+          </View> 
         </View>);
     },
 
