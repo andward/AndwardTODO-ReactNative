@@ -30,7 +30,7 @@ var DetailPage = React.createClass({
 		fetch(apiList.apiWrapper('comments', String(this.props.todo.id)), {
 				headers: {
 					'Authorization': this.props.token,
-				},
+				}
 			})
 			.then((response) => response.json())
 			.then((responseData) => {
@@ -43,7 +43,7 @@ var DetailPage = React.createClass({
 	},
 
 	updateComment: function() {
-		this.fetchData()
+		this.fetchData();
 	},
 
 	render: function() {
@@ -69,7 +69,8 @@ var DetailPage = React.createClass({
 			<CommentList 
 			dataSource={this.state.dataSource} />
 			<CommentInput
-			todo={this.props.todo} 
+			todo={this.props.todo}
+			token={this.props.token}
 			updateComment={this.updateComment} />
 			</View>
 			);

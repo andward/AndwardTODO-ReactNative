@@ -36,7 +36,7 @@ var CommentInput = React.createClass({
 			})
 			.then((response) => {
 				if (response.status >= 200 && response.status < 300) {
-					response.json();
+					return response.json();
 				} else {
 					var error = new Error(response.statusText)
 					error.response = response
@@ -46,9 +46,8 @@ var CommentInput = React.createClass({
 			.then((responseData) => {
 				this.props.updateComment();
 				this.clearInput();
-			})
-			.done();
-	},
+			});
+		},
 
 	clearInput: function() {
 		this._textInput.setNativeProps({text: ''});
