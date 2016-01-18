@@ -61,25 +61,31 @@ var SignInPage = React.createClass({
 			ANDWARD.TODO
 			</Text>
 			</View>
-			<View style = {styles.input}>
+			<View 
+			style = {styles.input}
+			accessibilityLabel = 'username-input'>
 			<TextInput
 			ref={component => this._uernameInput = component}
 		    onChangeText = {(username) => this.setState({username})}
 		    value = {this.state.username}
-		    multiline = {true}
+		    multiline = {false}
 		    placeholder = {'Your Account'} />
 		    </View>
-			<View style = {styles.input}>
+			<View 
+			style = {styles.input}
+			accessibilityLabel = 'passwd-input'>
 			<TextInput
 			ref={component => this._pwdInput = component}
 		    onChangeText = {(password) => this.setState({password})}
 		    value = {this.state.password}
-		    multiline = {true}
+		    secureTextEntry = {true}
+		    multiline = {false}
 		    placeholder = {'Your Password'} />
 		    </View>
             <TouchableNativeFeedback
             onPress={this.signIn}>            
-            <View style={styles.submit}>
+            <View style={styles.submit}
+            accessibilityLabel = 'signin-submit'>
             <Text style={styles.submitText}>
             SIGN IN
             </Text>
