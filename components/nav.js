@@ -186,7 +186,6 @@ var styles = StyleSheet.create({
   headerText: {
     color: '#4285f4',
     fontSize: 30,
-    textAlign: 'left',
   },
   container: {
      flex: 1,
@@ -199,7 +198,6 @@ var styles = StyleSheet.create({
   item: {
     paddingTop: 20,
     paddingBottom: 20,
-    textAlign: 'left',
     borderBottomWidth: 0.5,
     borderBottomColor: '#f5f5f5',
   },
