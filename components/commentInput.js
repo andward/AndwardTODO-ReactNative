@@ -68,7 +68,7 @@ var CommentInput = React.createClass({
 		onPress={this.postComment}>
 		<Image
 		  style={styles.image}
-		  source={{uri: apiList.resourceWrapper('submit.png')}} />
+		  source={require('../img/submit.png')} />
 		</TouchableHighlight>
         </View>
         </View>

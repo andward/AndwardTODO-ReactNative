@@ -156,7 +156,7 @@ var NavBar = React.createClass({
           renderNavigationView={this.navView}>
           <View style = {styles.container}>
           <ToolbarAndroid
-            navIcon={{uri: apiList.resourceWrapper('menu_white.png')}}
+            navIcon={require('../img/menu_white.png')}
             title={title}
             titleColor="white"
             style={styles.toolbar}
